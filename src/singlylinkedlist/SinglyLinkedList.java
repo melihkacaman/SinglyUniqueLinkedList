@@ -9,30 +9,29 @@ package singlylinkedlist;
  *
  * @author MelihKacaman
  */
-public class SinglyLinkedList<T extends Comparable<T>> {
+public class SinglyLinkedList {
 
-    Node<T> head;
+    Node head;
 
     public SinglyLinkedList() {
         this.head = null;
     }
 
     private void addFirst(Node newData) {
-        if (isEmpty()) {
+        if(isEmpty()) {
             head = newData;
         } else {
             newData.nextNode = head;
             head = newData;
         }
-
     }
 
-    private void addFirst(T data) {
-        Node<T> newNode = new Node<>(data);
+    private void addFirst(char data) {
+        Node newNode = new Node(data);
         addFirst(newNode);
     }
 
-    private void addLast(Node<T> newNode) {
+    private void addLast(Node newNode) {
         if (isEmpty()) {
             addFirst(newNode);
         } else {
@@ -46,18 +45,18 @@ public class SinglyLinkedList<T extends Comparable<T>> {
         }
     }
 
-    private void addLast(T data) {
-        addLast(new Node<>(data));
+    private void addLast(char data) {
+        addLast(new Node(data));
     }
 
-    private boolean addAfter(Node<T> newNode, T search) {
+    private boolean addAfter(Node newNode, char search) {
         if (isEmpty()) {
             addFirst(newNode);
             return true;
         } else {
-            Node<T> temp = head;
+            Node temp = head;
 
-            while (temp != null && !temp.data.equals(search)) {
+            while (temp != null && temp.data != search) {
                 temp = temp.nextNode;
             }
 
@@ -72,24 +71,24 @@ public class SinglyLinkedList<T extends Comparable<T>> {
         return false;
     }
 
-    private boolean addAfter(T data, T search) {
-        return addAfter(new Node<>(data), search);
+    private boolean addAfter(char data, char search) {
+        return addAfter(new Node(data), search);
     }
 
-    private Node<T> remove(T data) {
-        Node<T> removedNote = null;
+    private Node remove(char data) {
+        Node removedNote = null;
         if (isEmpty()) {
             System.out.println("List is empty!");
             return null;
         } else {
-            if (head.data.equals(data)) {
+            if (head.data == data) {
                 removedNote = head;
                 head = head.nextNode;
                 return removedNote;
             } else {
                 Node temp = head;
 
-                while (temp.nextNode != null && !temp.nextNode.data.equals(data)) {
+                while (temp.nextNode != null && temp.nextNode.data != data) {
                     temp = temp.nextNode;
                 }
 
@@ -104,7 +103,7 @@ public class SinglyLinkedList<T extends Comparable<T>> {
     }
 
     void print() {
-        Node<T> temp = head;
+        Node temp = head;
 
         while (temp != null) {
             System.out.print(temp.data + " -> ");
@@ -118,33 +117,34 @@ public class SinglyLinkedList<T extends Comparable<T>> {
         return head == null;
     }
 
-    void add(Node<T> newNode) {
-        char character = Character.toLowerCase(((Character)newNode.data));
-        
-        if (isEmpty()) {
-            addFirst(newNode);
-        } else {
-            if (checkForState(newNode.data)) {
+    void add(Node newNode) {
+        Node active = checkForState(newNode.data);
+
+        if (active != null){
+            if (isEmpty()) {
+                addFirst(active);
+            } else {
                 Node temp = head;
 
                 while (temp.nextNode != null) {
                     temp = temp.nextNode;
                 }
 
-                temp.nextNode = newNode;
-            } else {
-
+                temp.nextNode = active;
             }
         }
     }
 
-    void add(T data) {
-        add(new Node<>(data));
+    void add(char data) {
+        add(new Node(data));
     }
 
-    private boolean checkForState(T data) {
+    private Node checkForState(char data) {
+        Node result = null;
 
-        if (Character.isLetter((Character) data)) {
+        data = Character.toLowerCase(data);
+
+        if (Character.isLetter(data)) {
 
             Node temp = head;
             while (temp != null && temp.data != data) {
@@ -152,14 +152,11 @@ public class SinglyLinkedList<T extends Comparable<T>> {
             }
 
             if (temp == null) {
-                return true;
-            } else {
-                return false;
+                result = new Node(data);
             }
-        } else {
-            return false;
         }
 
+        return result;
     }
 
 }

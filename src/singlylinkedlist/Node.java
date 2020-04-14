@@ -9,11 +9,11 @@ package singlylinkedlist;
  *
  * @author MelihKacaman
  */
-public class Node<T extends Comparable<T>> {
-    T data; 
+public class Node {
+    char data;
     Node nextNode; 
     
-    public Node(T data){
+    public Node(char data){
         this.data = data; 
     }
     

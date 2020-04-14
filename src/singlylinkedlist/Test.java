@@ -6,7 +6,7 @@ import java.io.*;
 public class Test {
     public static void main(String[] args) throws IOException {
         
-        SinglyLinkedList<Character> chars = new SinglyLinkedList<>(); 
+        SinglyLinkedList chars = new SinglyLinkedList();
 
         File f=new File("input.txt");     
         FileReader fr=new FileReader(f);   
@@ -20,7 +20,7 @@ public class Test {
             for (char character : s.toCharArray()) {
                 chars.add(character); 
 
-                previousCharaceter = character; 
+               // previousCharaceter = character;
             }       
         }
         fr.close();
