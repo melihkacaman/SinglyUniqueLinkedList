@@ -6,7 +6,7 @@ import java.io.*;
 public class Test {
     public static void main(String[] args) throws IOException {
         
-        SinglyLinkedList chars = new SinglyLinkedList();
+        LinkedList chars = new LinkedList();
 
         File f=new File("input.txt");     
         FileReader fr=new FileReader(f);   

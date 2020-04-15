@@ -11,10 +11,13 @@ package singlylinkedlist;
  */
 public class Node {
     char data;
-    Node nextNode; 
-    
+    Node right;
+    SubNode down;
+
     public Node(char data){
-        this.data = data; 
+        this.data = data;
+        this.right = null;
+        this.down = null;
     }
     
 }
