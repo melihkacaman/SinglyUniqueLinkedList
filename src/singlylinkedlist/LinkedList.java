@@ -36,51 +36,7 @@ public class LinkedList {
         addFirst(newNode);
     }
 
-    private void addLast(Node newNode) {
-        if (isEmpty()) {
-            addFirst(newNode);
-        } else {
-            Node temp = head;
-
-            while (temp.right != null) {
-                temp = temp.right;
-            }
-
-            temp.right = newNode;
-        }
-    }
-
-    private void addLast(char data) {
-        addLast(new Node(data));
-    }
-
-    private boolean addAfter(Node newNode, char search) {
-        if (isEmpty()) {
-            addFirst(newNode);
-            return true;
-        } else {
-            Node temp = head;
-
-            while (temp != null && temp.data != search) {
-                temp = temp.right;
-            }
-
-            if (temp != null) {
-                newNode.right = temp.right;
-                temp.right = newNode;
-                return true;
-            }
-
-        }
-
-        return false;
-    }
-
-    private boolean addAfter(char data, char search) {
-        return addAfter(new Node(data), search);
-    }
-
-    private Node remove(char data) {
+    Node remove(char data) {
         Node removedNote = null;
         if (isEmpty()) {
             System.out.println("List is empty!");
