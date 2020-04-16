@@ -167,7 +167,7 @@ public class LinkedList {
 
     private void proccessOfSubnode(CheckStateResult active){
         char previousCharacter = previousCharacter();
-        if(previousCharacter != ' '){
+        if(Character.isLetter(previousCharacter)){
             Node targetNode = find(Character.toLowerCase(previousCharacter));
             addSubNode(new SubNode(active.result.data),targetNode);
         }
@@ -261,6 +261,7 @@ public class LinkedList {
             }
             System.out.print("null");
         }
+        System.out.println();
     }
 
     void enCokArdisik(){

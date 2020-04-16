@@ -31,10 +31,21 @@ public class Test {
         fr.close();
         
         chars.print();
-        //chars.ardisikKarakterler('v');
-        //chars.enCokArdisik();
-        //chars.enCokArdisik('v');
-        //chars.enAzArdisik();
-        //chars.enAzArdisik('l');
+        System.out.println();
+
+        System.out.println("Ardışık karakterler:");
+        chars.ardisikKarakterler('v');
+
+        System.out.println("En çok ardışık:");
+        chars.enCokArdisik();
+
+        System.out.println("En çok ardışık belirli bir karakterden sonra:");
+        chars.enCokArdisik('v');
+
+        System.out.println("En az ardışık");
+        chars.enAzArdisik();
+
+        System.out.println("En az ardışık belirli bir karakterden sonra:");
+        chars.enAzArdisik('l');
     }
 }
