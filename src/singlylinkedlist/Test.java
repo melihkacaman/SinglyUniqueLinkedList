@@ -29,7 +29,8 @@ public class Test {
             }       
         }
         fr.close();
-        
+
+        // Ana liste aşağı doğru alt listeler sağa doğru yazılır
         chars.print();
         System.out.println();
 
@@ -40,12 +41,12 @@ public class Test {
         chars.enCokArdisik();
 
         System.out.println("En çok ardışık belirli bir karakterden sonra:");
-        chars.enCokArdisik('v');
+        chars.enCokArdisik('d');
 
         System.out.println("En az ardışık");
         chars.enAzArdisik();
 
         System.out.println("En az ardışık belirli bir karakterden sonra:");
-        chars.enAzArdisik('l');
+        chars.enAzArdisik('v');
     }
 }

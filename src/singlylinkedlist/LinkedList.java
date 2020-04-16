@@ -16,7 +16,7 @@ package singlylinkedlist;
 public class LinkedList {
 
     Node head;
-    String tracker; // for previous character
+    String tracker; // for previous character (yeni eklenen karakterler peş peşe eklenir.)
     public LinkedList() {
         this.head = null;
         this.tracker = "";
@@ -158,14 +158,17 @@ public class LinkedList {
     }
 
     private boolean isEmptyForSubNode(Node node){
+        /// Node'un kendi listesine işaret eden ilk düğümü kontrol eder.
         return node.down == null;
     }
 
     private char previousCharacter(){
+        // Bir önceki karaktere ulaşılır.
         return (char) this.tracker.charAt(this.tracker.length() -1);
     }
 
     private void proccessOfSubnode(CheckStateResult active){
+        // Ana listede var olan bir node'un listesine düğüm eklemek için yazıldı.
         char previousCharacter = previousCharacter();
         if(Character.isLetter(previousCharacter)){
             Node targetNode = find(Character.toLowerCase(previousCharacter));
@@ -174,6 +177,7 @@ public class LinkedList {
     }
 
     void add(Node newNode) {
+        // Linked Liste tüm kontrolleri yaparak eleman ekler.
         CheckStateResult active = checkForState(newNode.data);
         if (!active.isFound && active.result != null){
             if (isEmpty()) {
@@ -201,6 +205,9 @@ public class LinkedList {
     }
 
     private CheckStateResult checkForState(char data) {
+        // Gelen karakterin eğer harf ise ana listeyi kontrol eden ve bulup bulmama durumuna göre sonuç üretir.
+        // CheckStateResult tipinde bir nesne döndürülür, bu nesne içindeki isFound ve result değişkenlerine göre durum
+        // add metodunda yönetilir.
         CheckStateResult result = new CheckStateResult(false);
 
         data = Character.toLowerCase(data);
@@ -225,6 +232,8 @@ public class LinkedList {
     }
 
     private void addSubNode(SubNode newNode, Node target) {
+        // Ana listedeki bir node'un listesine eleman ekler.
+        // Ana listedeki nodu ve ekleyeceği subNode dışarıdan alır.
         if(isEmptyForSubNode(target)) {
             target.down = newNode;
         } else {
@@ -250,21 +259,30 @@ public class LinkedList {
     }
 
     void ardisikKarakterler(char k){
+        // Target node'un listesinde gezer.
         Node target = find(k);
-        System.out.print(target.data + " -> ");
-        if(target.down != null){
-            SubNode subTemp = target.down;
-            System.out.print(" -> ");
-            while(subTemp != null){
-                System.out.print(subTemp.data+","+subTemp.count+" -> ");
-                subTemp = subTemp.down;
+        if(target != null){
+            System.out.print(target.data + " -> ");
+            if(target.down != null){
+                SubNode subTemp = target.down;
+                System.out.print(" -> ");
+                while(subTemp != null){
+                    System.out.print(subTemp.data+","+subTemp.count+" -> ");
+                    subTemp = subTemp.down;
+                }
+                System.out.print("null");
             }
-            System.out.print("null");
+        }
+        else {
+            System.out.println("Not found!");
         }
         System.out.println();
     }
 
     void enCokArdisik(){
+        // Önceki eleman ile karşılaştırma algoritması kullanıldı.
+        // Önce her bir nodun içinde en çok kullanılmış karakter ile ikili oluşturulur ardından aynı işlem yapılarak ikisi
+        // karşılaştırılır.
         Node temp = head;
         Node theBiggest = null;
 
@@ -291,9 +309,10 @@ public class LinkedList {
     }
 
     void enCokArdisik(char k){
+        // Üstteki metodun aynısıdır lakin ayrıca ana listede de gezmiyor hedef bir Node'da geziyor.
         Node target = find(k);
 
-        if(target.down != null){
+        if(target != null && target.down != null){
             SubNode subTemp = target.down;
             Node theBiggestCouple = target;
             theBiggestCouple.down = subTemp;
@@ -313,6 +332,7 @@ public class LinkedList {
     }
 
     void enAzArdisik(){
+        // enCokArdisik metodunun aynısıdır
         Node temp = head;
         Node theBiggest = null;
 
@@ -323,7 +343,7 @@ public class LinkedList {
                 theBiggestCouple.down = subTemp;
 
                 while(subTemp != null){
-                    if(subTemp.count > theBiggestCouple.down.count){
+                    if(subTemp.count > theBiggestCouple.down.count){    // karşılaştırma yönü değişmiştirilmiştir.
                         theBiggestCouple.down = subTemp;
                     }
 
@@ -341,7 +361,7 @@ public class LinkedList {
     void enAzArdisik(char k){
         Node target = find(k);
 
-        if(target.down != null){
+        if(target != null &&target.down != null){
             SubNode subTemp = target.down;
             Node theBiggestCouple = target;
             theBiggestCouple.down = subTemp;
@@ -357,6 +377,6 @@ public class LinkedList {
             return;
         }
 
-        System.out.println("The character you've chosen have no couples!");
+        System.out.println("The character you've chosen have no couples or no char!");
     }
 }
