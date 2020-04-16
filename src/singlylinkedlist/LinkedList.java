@@ -6,9 +6,13 @@
 package singlylinkedlist;
 
 /**
- *
- * @author MelihKacaman
+ * @file CheckStateResult
+ * @description Dışarıdan parametre olarak gelen karakterin kontrol işlemleri için hazırlanan metodun result sınıfı.
+ * @assignment 1
+ * @date 15.04.2020
+ * @author Melih Kaçaman, mkacamann@gmail.com
  */
+
 public class LinkedList {
 
     Node head;
@@ -132,12 +136,21 @@ public class LinkedList {
         Node temp = head;
 
         while (temp != null) {
-            System.out.print(temp.data + " -> ");
+            System.out.print(temp.data);
+            if(temp.down != null){
+                SubNode subTemp = temp.down;
+                System.out.print(" -> ");
+                while(subTemp != null){
+                    System.out.print(subTemp.data+","+subTemp.count+" -> ");
+                    subTemp = subTemp.down;
+                }
+                System.out.print("null");
+            }
+            System.out.println("");
             temp = temp.right;
         }
 
         System.out.println("null");
-        System.out.println(this.tracker);
     }
 
     private boolean isEmpty() {
@@ -146,6 +159,18 @@ public class LinkedList {
 
     private boolean isEmptyForSubNode(Node node){
         return node.down == null;
+    }
+
+    private char previousCharacter(){
+        return (char) this.tracker.charAt(this.tracker.length() -1);
+    }
+
+    private void proccessOfSubnode(CheckStateResult active){
+        char previousCharacter = previousCharacter();
+        if(previousCharacter != ' '){
+            Node targetNode = find(Character.toLowerCase(previousCharacter));
+            addSubNode(new SubNode(active.result.data),targetNode);
+        }
     }
 
     void add(Node newNode) {
@@ -161,23 +186,14 @@ public class LinkedList {
                 }
 
                 temp.right = active.result;
-                char previousCharacter = (char) this.tracker.charAt(this.tracker.length() -1);
-                if(previousCharacter != ' '){
-                    Node targetNode = find(Character.toLowerCase(previousCharacter));
-                    addSubNode(new SubNode(active.result.data),targetNode);
-                }
+
+                proccessOfSubnode(active);
             }
         }
         else if (active.result != null){
-            char previousCharacter = (char) this.tracker.charAt(this.tracker.length() -1);
-            if(previousCharacter != ' '){
-                Node targetNode = find(previousCharacter);
-                addSubNode(new SubNode(active.result.data),targetNode);
-            }
+            proccessOfSubnode(active);
         }
         this.tracker += newNode.data;
-        System.out.println(this.tracker);
-
     }
 
     void add(char data) {
@@ -214,16 +230,132 @@ public class LinkedList {
         } else {
             SubNode temp = target.down;
 
-            while (temp != null && temp.data!= newNode.data) {
+            if(temp.data == newNode.data){
+                temp.count++;
+                return;
+            }
+
+            while (temp.down != null && temp.down.data!= newNode.data) {
                 temp = temp.down;
             }
-            // TO DO: LOSE THE ADDRESS
-            if(temp == null){
-                temp = newNode;
+
+            if(temp.down == null){
+                temp.down = newNode;
             }
             else {
-                temp.count++;
+                temp.down.count++;
             }
         }
+
+    }
+
+    void ardisikKarakterler(char k){
+        Node target = find(k);
+        System.out.print(target.data + " -> ");
+        if(target.down != null){
+            SubNode subTemp = target.down;
+            System.out.print(" -> ");
+            while(subTemp != null){
+                System.out.print(subTemp.data+","+subTemp.count+" -> ");
+                subTemp = subTemp.down;
+            }
+            System.out.print("null");
+        }
+    }
+
+    void enCokArdisik(){
+        Node temp = head;
+        Node theBiggest = null;
+
+        while(temp != null){
+            if(temp.down != null){
+                SubNode subTemp = temp.down;
+                Node theBiggestCouple = temp;
+                theBiggestCouple.down = subTemp;
+
+                while(subTemp != null){
+                    if(subTemp.count > theBiggestCouple.down.count){
+                        theBiggestCouple.down = subTemp;
+                    }
+
+                    subTemp = subTemp.down;
+                }
+                if(theBiggest == null || theBiggest.down.count < theBiggestCouple.down.count)
+                    theBiggest = theBiggestCouple;
+            }
+            temp = temp.right;
+        }
+
+        System.out.println(theBiggest.data + " " + theBiggest.down.data+","+theBiggest.down.count);
+    }
+
+    void enCokArdisik(char k){
+        Node target = find(k);
+
+        if(target.down != null){
+            SubNode subTemp = target.down;
+            Node theBiggestCouple = target;
+            theBiggestCouple.down = subTemp;
+
+            while(subTemp != null){
+                if(subTemp.count > theBiggestCouple.down.count){
+                    theBiggestCouple.down = subTemp;
+                }
+
+                subTemp = subTemp.down;
+            }
+            System.out.println(theBiggestCouple.data + " " + theBiggestCouple.down.data+","+theBiggestCouple.down.count);
+            return;
+        }
+
+        System.out.println("The character you've chosen have no couples!");
+    }
+
+    void enAzArdisik(){
+        Node temp = head;
+        Node theBiggest = null;
+
+        while(temp != null){
+            if(temp.down != null){
+                SubNode subTemp = temp.down;
+                Node theBiggestCouple = temp;
+                theBiggestCouple.down = subTemp;
+
+                while(subTemp != null){
+                    if(subTemp.count > theBiggestCouple.down.count){
+                        theBiggestCouple.down = subTemp;
+                    }
+
+                    subTemp = subTemp.down;
+                }
+                if(theBiggest == null || theBiggest.down.count > theBiggestCouple.down.count)
+                    theBiggest = theBiggestCouple;
+            }
+            temp = temp.right;
+        }
+
+        System.out.println(theBiggest.data + " " + theBiggest.down.data+","+theBiggest.down.count);
+    }
+
+    void enAzArdisik(char k){
+        Node target = find(k);
+
+        if(target.down != null){
+            SubNode subTemp = target.down;
+            Node theBiggestCouple = target;
+            theBiggestCouple.down = subTemp;
+
+            while(subTemp != null){
+                if(subTemp.count < theBiggestCouple.down.count){
+                    theBiggestCouple.down = subTemp;
+                }
+
+                subTemp = subTemp.down;
+            }
+            System.out.println(theBiggestCouple.data + " " + theBiggestCouple.down.data+","+theBiggestCouple.down.count);
+            return;
+        }
+
+        System.out.println("The character you've chosen have no couples!");
     }
 }

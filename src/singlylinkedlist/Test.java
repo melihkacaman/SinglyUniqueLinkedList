@@ -2,6 +2,13 @@ package singlylinkedlist;
 
 import java.io.*;
 
+/**
+ * @file CheckStateResult
+ * @description Dışarıdan parametre olarak gelen karakterin kontrol işlemleri için hazırlanan metodun result sınıfı.
+ * @assignment 1
+ * @date 15.04.2020
+ * @author Melih Kaçaman, mkacamann@gmail.com
+ */
 
 public class Test {
     public static void main(String[] args) throws IOException {
@@ -18,15 +25,16 @@ public class Test {
         while((s=br.readLine())!=null)      
         {
             for (char character : s.toCharArray()) {
-                chars.add(character); 
-
-               // previousCharaceter = character;
+                chars.add(character);
             }       
         }
         fr.close();
         
         chars.print();
-        
-        
+        //chars.ardisikKarakterler('v');
+        //chars.enCokArdisik();
+        //chars.enCokArdisik('v');
+        //chars.enAzArdisik();
+        //chars.enAzArdisik('l');
     }
 }
